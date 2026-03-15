@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["fronend/src/*"],
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}
