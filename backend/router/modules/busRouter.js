@@ -38,6 +38,7 @@ router.get("/", async (req, res, next) => {
       query,
       model
     });
+    console.log(ans, 'ans');
 
     res.json({
       code: 200,

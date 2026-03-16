@@ -11,12 +11,12 @@ export default {
     url: "/api/articles",
     method: "GET"
   },
-  "publishArticle": {
+  "articleAdd": {
     url: "/api/articles",
     method: "POST",
     withToken: true
   },
-  "upload": {
+  "uploadArticleCover": {
     url: "/upload/article",
     method: "POST",
     withToken: true

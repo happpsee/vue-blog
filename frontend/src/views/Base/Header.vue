@@ -56,7 +56,7 @@ const loginStore = useLoginStore();
 const navs = ref([
   {text: '首页', path: '/', icon: House},
   {text: '分类', path: '/classfy',  },
-  {text: '文章', path: 'article'},
+  {text: '写文章', path: '/write'},
 ]);
 
 
