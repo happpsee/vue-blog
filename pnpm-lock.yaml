@@ -109,6 +109,9 @@ importers:
       vue-router:
         specifier: ^5.0.3
         version: 5.0.3(@vue/compiler-sfc@3.5.29)(pinia@3.0.4(vue@3.5.29))(vue@3.5.29)
+      wordcloud:
+        specifier: ^1.2.3
+        version: 1.2.3
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: ^6.0.2
@@ -2185,6 +2188,9 @@ packages:
   wildcard@1.1.2:
     resolution: {integrity: sha512-DXukZJxpHA8LuotRwL0pP1+rS6CS7FF2qStDDE1C7DDg2rLud2PXRMuEDYIPhgEezwnlHNL4c+N6MfMTjCGTng==}
 
+  wordcloud@1.2.3:
+    resolution: {integrity: sha512-9by77b7Sd9e1K75kSmVeAD+JnGpiLR1Z4EX1mYQL91jKrU1/4bHw4h4DExQ+dzfT+PvihDcH7OS7V4Y5UkbF2w==}
+
   wordwrap@0.0.3:
     resolution: {integrity: sha512-1tMA907+V4QmxV7dbRvb4/8MaRALK6q9Abid3ndMYnbyo8piisCmeONVqVSXqQA3KaP4SLt5b7ud6E2sqP8TFw==}
     engines: {node: '>=0.4.0'}
@@ -4163,6 +4169,8 @@ snapshots:
       isexe: 2.0.0
 
   wildcard@1.1.2: {}
+
+  wordcloud@1.2.3: {}
 
   wordwrap@0.0.3: {}
 

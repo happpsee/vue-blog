@@ -25,7 +25,7 @@
       :width="600"
       :close-on-click-modal="false"
       :close-on-press-escape="false">
-        <el-form ref="submitForm" :model="submitForm">
+        <el-form  :model="submitForm">
 
           <el-form-item label="文章封面" prop="cover">
             <el-upload 
@@ -34,7 +34,6 @@
             :auto-upload="false" 
             :drag="true"
             :limit="1"
-            :on-success="handleCoverSuccess"
             :on-exceed="handleExceed">
             <img v-if="articleCoverUrl" class="article-cover" :src="articleCoverUrl">
               <el-icon v-else class="upload-icon">
@@ -61,6 +60,15 @@
             </el-select>
           </el-form-item>
 
+          <el-form-item label="文章摘要", prop="summary">
+            <el-input 
+            v-model="submitForm.summary"  
+            type="textarea"
+            placeholder="请输入文章摘要"></el-input>
+          </el-form-item>
+
+
+
           <el-form-item class="submit-btns">
             <el-button @click="btnAgency('close')">取消</el-button>
             <el-button type="primary" @click="btnAgency('submit')">提交</el-button>
@@ -78,104 +86,22 @@ import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
 import "@wangeditor/editor/dist/css/style.css";
 import { useWangEditor } from './compsables/useWangEditor';
 import { Plus } from '@element-plus/icons-vue';
-import { ElNotification } from 'element-plus';
-import { inject, ref, useTemplateRef, computed, onBeforeMount } from 'vue';
-
+import { inject, ref} from 'vue';
+import { useEditForm } from './compsables/useEditForm';
 defineOptions({
   name: 'ArticleEditor'
 });
 
-const { editorRef, valueHtml, toolbarConfig, editorConfig, handleCreated } = useWangEditor();
 const { useApi } = inject('api');
 const showSubmitDialog = ref(false);
-const submitFormRef = useTemplateRef("submitForm");
-const uploadArticleCoverRef = useTemplateRef("uploadArticleCover");
-const columns = ref(null);
-//表单数据
-const submitForm = ref({
-  title: "",
-  cover: "",
-  column: ""
-});
-
-const articleCoverUrl = computed(() => {
-  if (!submitForm.value.cover || submitForm.value.cover.length <= 0) {
-    return false;
-  }
-  let coverURL = URL.createObjectURL(submitForm.value.cover[0]?.raw);
-  return coverURL;
-});
-
-const handleExceed =  (rawFile) => {
-  uploadArticleCoverRef.value.clearFiles();
-  uploadArticleCoverRef.value.handleStart(rawFile[0]);
-};
-
-
-onBeforeMount(async () => {
-  const { data } = await useApi("column");
-  columns.value = data;
-  console.log(data, 'data是什么');
-});
-
+const { editorRef, valueHtml, toolbarConfig, editorConfig, handleCreated } = useWangEditor({useApi});
+const { submitForm, columns, articleCoverUrl,  handleExceed, btnAgency } = useEditForm({useApi,  valueHtml, showSubmitDialog});
 
 
 const submitArticle = () => {
   showSubmitDialog.value = true;
 };
 
-const btnAgency = async (type) => {
-  if (type === 'close') {
-    showSubmitDialog.value = false;
-    return false;
-  }
-    console.log(submitForm.value, 'submitForm.value');
-
-    const coverFormdata = new FormData();
-  
-    coverFormdata.append("file", submitForm.value.cover[0].raw);
-    let coverURL = "";
-    try {
-     const ans = await useApi('uploadArticleCover', coverFormdata);
-     coverURL = ans.fileUrl;
-    } catch (err) {
-      console.log(err, 'err');
-      ElNotification.error({
-        title: '上传封面失败!',
-        duration: 2000,
-        showClose: false,
-        message: '请检查封面是否符合要求'
-      });
-      return false;
-    }
-    try {
-    await useApi('articleAdd', {
-      title: submitForm.value.title,
-      cover: coverURL,
-      content: editorRef.value.getHtml(),
-      column: submitForm.value.column,
-    });
-    ElNotification.success({
-      title: '发布文章成功!',
-      duration: 2000,
-      showClose: false,
-      message: '文章发布成功'
-    });
-      showSubmitDialog.value = false;
-      uploadArticleCoverRef.value.clearFiles();
-    } catch (err) {
-      console.log(err, 'err');
-      ElNotification.error({
-        title: '发布文章失败!',
-        duration: 2000,
-        showClose: false,
-        message: '请检查文章内容是否有误'
-      });
-      return false;
-    }
-
-
-}
 
 </script>
 
@@ -223,4 +149,13 @@ const btnAgency = async (type) => {
   display flex
   justify-content flex-end
 
+
+.el-textarea :deep(textarea) 
+  width 330px
+  resize none
+  field-sizing content
+  max-height 200px
+  overflow auto
+  &::-webkit-scrollbar
+    display none
 </style>
