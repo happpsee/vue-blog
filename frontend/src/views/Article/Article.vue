@@ -21,12 +21,17 @@
 import {  onMounted,onActivated, inject, ref, getCurrentInstance } from 'vue';
 import ArticleItem from './ArticleItem.vue';
 import VirtualList from '@/components/virtualList.vue';
+import { useRoute } from 'vue-router';
+
 defineOptions({
   name: 'BaseArticle'
 });
 onActivated(() => {
   console.log("诸法onActiveate");
-})
+});
+
+const route = useRoute();
+
 
 const {useApi} = inject('api');
 
@@ -42,9 +47,14 @@ const requestArticle = async () => {
     return ;
   }
   loading.value = true;
-  const ans = await useApi('articles', {
+
+  const data = {
     curPages: nextPage.value
-  });
+  };
+
+  route.query.columnId && (data.column = route.query.columnId);
+
+  const ans = await useApi('articles', data);
   console.log('拿到新数据');
 
   articles.value = articles.value.concat(ans.data);

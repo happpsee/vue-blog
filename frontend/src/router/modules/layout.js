@@ -25,6 +25,11 @@ export default {
         component: ArticleDetail,
       },
       {
+        path: "/article",
+        name: "article",
+        component: Article,
+      },
+      {
         path: "/write",
         name: "editor",
         component: ArticleEditor,
