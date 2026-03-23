@@ -65,6 +65,8 @@ const length = toRef(() => Math.ceil(props.listHeight / itemHeight.value)); //�
 const scrollTop = ref(0);
 const start = ref(0);
 const itemRefs = useTemplateRef("items");
+
+
 const list = toRef(() => {
   let itemHeightRaw = itemHeight.value;
   return props.data.map((item, index) => {
@@ -78,6 +80,8 @@ const list = toRef(() => {
     }
   });
 });
+
+
 const totalHeight = computed(() => {
   if (list.value.length === 0) {
     return 0;
@@ -102,13 +106,13 @@ const visibleList = computed(() => {
 
 onUpdated(() => {
     let nodes = itemRefs.value;
-    if (!nodes) {
+    if (!nodes || nodes.length === 0) {
       return ;
     }
     let minIdx = 0;
-    console.log(nodes, 'nodes是什么看看');
-    for (let i = nodes.length; i--;) {
-      let dom = nodes[i];
+
+    for (let i = 0, dom; dom = nodes[i++]; ) {
+      console.log(dom, 'dom是什么看看');
       let index = dom.dataset.item;
       let rect = dom.getBoundingClientRect();
       let height = rect.height;
@@ -175,9 +179,6 @@ const scrollEvent = (event) => {
     lock = false;
   });
 };
-
-
-
 </script>
 
 
@@ -191,9 +192,6 @@ const scrollEvent = (event) => {
   &::-webkit-scrollbar
    width 6px
    cursor pointer
-  //  background-color pink
-  // &::-webkit-scrollbar-button
-  //   display none
   &::-webkit-scrollbar-thumb
     background-color #dddee0
     opacity .3

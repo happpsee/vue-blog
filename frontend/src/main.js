@@ -20,8 +20,6 @@ import "animate.css";
 import { useApi } from '@/apis/index.js';
 import store from 'store';
 
-
-
 const app = createApp(App)
 
 

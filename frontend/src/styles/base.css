@@ -1,3 +1,75 @@
+/* 导入Google字体 */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+/* 全局样式重置 */
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  font-family: 'Archivo', 'Space Grotesk', sans-serif;
+  background-color: #FAFAFA;
+  color: #09090B;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 通用链接样式 */
+a {
+  color: #2563EB;
+  text-decoration: none !important;
+  transition: all 0.2s ease-in-out;
+}
+
+a:hover {
+  color: #1D4ED8;
+  text-decoration: underline;
+}
+
+/* 通用按钮样式 */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+/* 通用输入框样式 */
+input, textarea, select {
+  font-family: inherit;
+  transition: all 0.2s ease-in-out;
+}
+
+/* 禁用文本选择 */
+.no-select {
+  user-select: none;
+}
+
+/* 响应式容器 */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
 }

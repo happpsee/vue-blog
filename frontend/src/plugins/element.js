@@ -25,7 +25,8 @@ import {
   ElButtonGroup,
   ElSelect,
   ElOption,
-  ElUpload
+  ElUpload,
+  ElImage
 } from 'element-plus'
 
 
@@ -55,7 +56,8 @@ const components = [
   ElButtonGroup,
   ElSelect,
   ElOption,
-  ElUpload
+  ElUpload,
+  ElImage
 ];
 
 const customElComponents = [

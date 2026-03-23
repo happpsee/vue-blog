@@ -16,7 +16,7 @@ const POP_PUT_MAP = {
     "authField": "author",
   },
   "User": {
-    "revisable": ["username", "password", "email", "avatar", "nickName"],
+    "revisable": ["username", "password", "email", "avatar", "nickname", "signature", "description"],
     "authField": "_id"
   },
   "Comment": {
@@ -33,7 +33,9 @@ const POP_PUT_MAP = {
 const handlePopPut = async ({model, userId, data, putData, resourceId}) => {
 
   let { revisable, authField } = POP_PUT_MAP[model.modelName];
-  
+
+  console.log("看看revisable", revisable, putData);
+
   assert.equal(userId, data[authField], 403, "无权修改");
 
   let updateData = revisable.reduce((acc, curr) => {

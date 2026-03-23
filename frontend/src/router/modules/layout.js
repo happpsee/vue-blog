@@ -10,6 +10,7 @@ import Article from '@/views/Article/Article.vue'
 import ArticleDetail from '@/views/Article/Detail/ArticleDetail.vue';
 import ArticleEditor from '@/views/Editor/Editor.vue';
 import Classify from '@/views/Classify/index.vue';
+import UserInfo from '@/views/UserInfo/index.vue';
 
 export default {
     path: '/',
@@ -25,11 +26,6 @@ export default {
         component: ArticleDetail,
       },
       {
-        path: "/article",
-        name: "article",
-        component: Article,
-      },
-      {
         path: "/write",
         name: "editor",
         component: ArticleEditor,
@@ -38,6 +34,11 @@ export default {
         path: "/classify",
         name: "classify",
         component: Classify,
+      },
+      {
+        path: "/userinfo",
+        name: "userinfo",
+        component: UserInfo,
       }
     ]
 }

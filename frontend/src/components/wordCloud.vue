@@ -183,9 +183,9 @@ onMounted(() => {
   font: 18px Arial;
   line-height: 24px;
   color: white;
-  background: black;
+  background:  #3F3F46;
   border: 0px;
-  border-radius: 2px;
+  border-radius: 10px;
   pointer-events: none;
 }
 </style>

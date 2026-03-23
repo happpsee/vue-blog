@@ -10,27 +10,21 @@ import { defineStore } from "pinia";
 import store from "store";
 export const useLoginStore = defineStore('login', {
   state:() =>  ({
-    show: false,
-    login: !!store.get(import.meta.env.VITE_TOKEN_KEY),
-    type: 'login',
+    isLogin: !!store.get(import.meta.env.VITE_TOKEN_KEY),
     userInfo: store.get(import.meta.env.VITE_USER_INFO)
   }),
   actions: {
-    open(type) {
-      this.show = true;
-
-      type && (this.type = type)
+    login(userInfo) {
+      this.isLogin = true;
+      console.log(this.isLogin, 'thios.isLogin');
+      this.setUserInfo(userInfo);
     },
-    close() {
-      this.show = false;
+    logout() {
+      this.isLogin = false;
     },
     setUserInfo(userInfo) {
       this.userInfo = userInfo;
       store.set(import.meta.env.VITE_USER_INFO, userInfo);
-    },
-    changeShow(val, type) {
-      this.show = val;
-      this.show && (this.type = type);
-    },
+    }
   }
 });

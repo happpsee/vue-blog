@@ -50,10 +50,10 @@ router.get("/",async (req, res) => {
 
 
 router.put("/", async (req, res) => {
-  const { nickName, signature, avatar, email, description} = req.body;
+  const { nickname, signature, avatar, email, description} = req.body;
   
   const update = {};
-  nickName && (update.nickName = nickName);
+  nickname && (update.nickname = nickname);
   signature && (update.signature = signature);
   avatar && (update.avatar = avatar);
   email && (update.email = email);

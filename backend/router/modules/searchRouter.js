@@ -31,7 +31,8 @@ router.get("/", async (req, res, next) => {
     .display(display)
     .exec();
 
-    console.log(result, "result");
+    result.data = result.records;
+    delete result.records;
     res.json({
       code: 200, 
       data: result,

@@ -12,7 +12,7 @@
         :src="userInfo?.avatar ?? 'https://ts1.tc.mm.bing.net/th/id/OIP-C.krr9xL5BPcI8y3YCBNW5pwHaHa?w=180&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2'">
       </el-avatar>
       <p class="nickname text-2xl">
-        {{ userInfo?.nikename ?? `用户${Date.now()}` }}
+        {{ userInfo?.nickname ?? `用户${Date.now()}` }}
       </p>
 
       <div class="flex gap-x-6 mb-6">

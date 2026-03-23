@@ -33,12 +33,15 @@ import {inject, onBeforeMount, ref} from "vue";
 import {Plus} from "@element-plus/icons-vue";
 import { ElNotification } from "element-plus";
 import { useRouter } from "vue-router";
+import { useArticleStore } from "@/stores/modules/article";
+
 
 const { useApi } = inject("api");
 const columnData = ref([]);
 const showAddDialog = ref(false);
 const inputColumn = ref(null);
 const router = useRouter();
+const articleStore  = useArticleStore();
 
 const closeAddDialog = () => {
   showAddDialog.value = false;  
@@ -47,14 +50,13 @@ const openAddDialog = () => {
   showAddDialog.value = true;
 };
 
-const navigate = (event, d) =>{
-  console.log(d.columnId);
-  router.push({
-    path: "/article",
-    query: {
-      columnId: d.columnId
-    }
-  })
+const navigate = async (event, d) =>{
+  await articleStore.getArticels({ 
+    columnId: d.columnId,
+  }, {
+    reset: true
+  });
+  router.push("/");
 };
 
 const getColumnData = async () => {
