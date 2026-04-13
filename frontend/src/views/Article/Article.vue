@@ -11,7 +11,6 @@
     <template #default="{ item }">
       <ArticleItem :article="item"></ArticleItem>
     </template>
-
   </VirtualList>
 
 </template>
@@ -27,7 +26,7 @@ defineOptions({
   name: 'BaseArticle'
 });
 
-const articleStore  = useArticleStore();
+const articleStore  = useArticleStore();  
 
 
 //用于给子组件做无限加载填充数据

@@ -26,5 +26,17 @@ export default {
     withToken: true,
     url: "/",
     method: "POST"
+  },
+  "registry": {
+    url: "/user/registry",
+    method: "POST",
+    rsaKey: ["password"],
+    setToken: true
+  },
+  "login": {
+    url: "/user/login",
+    method: "POST",
+    rsaKey: ["password"],
+    setToken: true
   }
 }

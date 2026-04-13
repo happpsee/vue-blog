@@ -8,10 +8,7 @@
  */
 
 const express = require("express");
-const Key = require("../../models/modules/Key");
 const createError = require("http-errors");
-
-const { secretKeyMap} = require('../../core/index');
 const router = express.Router();
 
 
@@ -20,7 +17,7 @@ router.get("/", async (req, res, next) => {
     res.json({
       code: 200,
       data: {
-        publicKey: secretKeyMap['public']
+        publicKey: req.app.locals.publicKey
       },
       timestamp: Date.now()
     });

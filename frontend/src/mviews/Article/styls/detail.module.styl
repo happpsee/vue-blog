@@ -1,0 +1,123 @@
+.detail
+  height: 100%
+  display flex
+  flex-direction column
+  overflow: auto
+  &::-webkit-scrollbar
+    display: none
+
+.comment
+  position fixed
+  bottom 0 
+  left 0
+  right 0
+  padding 5PX 0
+  z-index 100
+  border-top-left-radius: 8PX;
+  border-top-right-radius: 8PX;
+
+.content
+  flex 1
+  min-width: 0;
+  overflow auto
+  background-color: transparent !important;
+
+.user-info
+  display: flex
+  align-items: center
+  justify-content: space-between
+  padding: 5PX
+
+.right
+  flex 1
+  margin-left 10PX
+
+
+.nickname
+  font-size 14PX
+
+.article-about
+  display: flex
+  align-items: center
+  font-size: 10PX
+
+
+.icon-date
+  display: block;
+  width: 12PX;
+  height: 12PX;
+  background: url("date.svg");
+  background-size: 12PX;
+
+.icon-like
+  display: block;
+  width: 12PX;
+  height: 12PX;
+  background: url("like.svg");
+  background-size: 12PX;
+
+.about-item
+  display: flex
+  align-items: center;
+  margin-right: 8PX
+  column-gap 2PX
+
+.icon-star
+  display: block;
+  width: 18PX;
+  height: 18PX;
+  background: url("star.svg");
+  background-size: 18PX;
+
+
+.title
+  font-size 22PX
+
+.detail
+  padding 10PX
+
+.detail :global(.van-search__action)
+  &:active
+    background-color: transparent !important;
+
+.comment-btn
+  color  #4B5563
+  height:  100%
+  padding: 0 10PX
+  border-radius: 4PX
+
+.comment-title
+  font-size: 20PX
+  padding-left: 10PX
+
+.comment-wrap
+  padding 10PX
+  padding-left 0
+
+.user-info
+  display: flex
+  justify-content: flex-start
+  align-items: center
+  column-gap 7PX
+
+.nickname
+  margin: 0
+  font-size 12PX
+  white-space: nowrap;
+  line-height: 14PX
+
+.comment-date
+  font-size: 8PX
+  white-space:  nowrap
+  margin-top: 8PX
+  line-height: 0;
+
+.comment-wrap :global(.van-cell)
+  flex-direction: column
+
+.comment-wrap :global(.van-cell__value)
+  text-align: left;
+
+.avatar
+  width: 30PX
+  object-fit: cover

@@ -21,9 +21,17 @@
               <el-icon><View /></el-icon>
               <span>{{ article?.clickNums }} 阅读</span>
             </span>
-            <span class="meta-item">
-              <el-icon><Star /></el-icon>
+           <span class="meta-item">
+            <el-icon>
+                <component :is="tools.like.icon"></component>
+              </el-icon>
               <span>{{ article?.likeNums }} 点赞</span>
+            </span>
+            <span class="meta-item">
+              <el-icon>
+                <component :is="tools.star.icon"></component>
+              </el-icon>
+              <span>{{ article?.starNums }} 收藏</span>
             </span>
           </div>
         </div>
@@ -82,6 +90,7 @@
         <el-button 
           v-for="(value, key) in tools" 
           class="tool-item" 
+          :key="key"
           circle  
           :icon="value.icon" 
           @click="toolAgency(key)"
@@ -98,26 +107,34 @@ import {onBeforeMount, ref, inject} from 'vue';
 import "github-markdown-css/github-markdown-light.css"
 import { useTool } from './compsables/useTool';
 import { useComment } from './compsables/useComment';
-import { Calendar, View, Star, ChatLineRound, Share } from '@element-plus/icons-vue';
-
+import { Calendar, View, Star } from '@element-plus/icons-vue';
+import { getArticles, addArticles } from "@/stores/modules/keepArticle";
 defineOptions({
   name: "ArticeDetail"
 });
 
 const { useApi } = inject("api");
+const route = useRoute();
 const article = ref(null);
-
-const { isComment, tools, toolAgency } = useTool();
+const { isComment, tools, toolAgency } = useTool({article, useApi, id: route.params.id});
 const { inputComment, comments, uploadComment} = useComment(article);
 
-onBeforeMount(async () => {
-  const route = useRoute();
 
-  const ans = await useApi("articleDetail", {
-    id: route.params.id
-  });
+onBeforeMount(async () => {
+  let ans = getArticles(route.params.id);
+
+
+  if (!ans) {
+    ans = await useApi("articleDetail", {
+      id: route.params.id
+    });
+    addArticles(route.params.id, ans);
+  }
   article.value = ans;
-});
+
+  console.log("看看article.value", article.value);
+})
+
 </script>
 
 <style lang="stylus" scoped>
@@ -333,6 +350,7 @@ onBeforeMount(async () => {
   line-height 1.5
   color text_color
   transition transition_default
+  field-sizing content
   &:focus
     outline none
     border-color cta_color

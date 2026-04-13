@@ -12,17 +12,36 @@
 
 
 <script setup>
-import { useLoginStore } from '@/stores/modules/login';
-
-const loginStore = useLoginStore();
-
-const open = () => {
-   loginStore.open();
-}
-
+import { useLoginStore } from "@/stores/modules/login"
+import { ElNotification } from "element-plus";
+import {watch} from "vue";
+import store from "store";
 defineOptions({
   name: 'BaseMain'
 })
 
+
+const loginStore = useLoginStore();
+
+
+
+watch(() => loginStore.isLogin, (newVal) => {
+
+  if (newVal) {
+  const token = store.get(import.meta.env.VITE_TOKEN_KEY)
+  const eventSource = new EventSource(`${import.meta.env.VITE_BASE_URL}/loginSSE?token=${token}`);
+  eventSource.onmessage = (event) => {
+    console.log(event, "Event");
+    if (event.data === "logout") {
+      loginStore.logout();
+      ElNotification.warning({
+        title: "提示",
+        message: "当前账号在别处登录!您已被强制下线",
+      });
+      eventSource.close();
+    }
+  }
+  }
+}, {immediate: true});
 
 </script>

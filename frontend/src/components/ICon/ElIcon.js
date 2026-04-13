@@ -26,7 +26,6 @@ export default {
         style: {
           width: this.width,
           height: this.height
-
         },
         src: this.custom
       });

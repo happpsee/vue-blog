@@ -8,7 +8,7 @@
  */
 const mongoose = require("mongoose");
 
-const schema = mongoose.Schema({
+module.exports = {
   name: {
     type: mongoose.SchemaTypes.String,
     default: "分栏"
@@ -26,7 +26,4 @@ const schema = mongoose.Schema({
   uid: {
     type: mongoose.SchemaTypes.ObjectId
   }
-});
-
-
-module.exports = mongoose.model("Column", schema);
+};

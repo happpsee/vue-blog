@@ -10,12 +10,14 @@
 <script>
 import {h} from 'vue';
 import Layout from '@/views/Base/Layout.vue';
+import { _isMobile } from '@/utils/index';
+import mLayout from "@/mviews/Layout.jsx"
 
 export default {
   name: 'App',
   render: () => {
     return h('div', {id: 'app'}, [
-      h(Layout)
+      !_isMobile() ? h(Layout) : h(mLayout)
     ])
   }
 }

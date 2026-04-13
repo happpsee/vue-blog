@@ -8,16 +8,7 @@
  */
 
 module.exports = {
-  "Article": {
-    //创建字段
-    "body": (req) => {
-      console.log(req.users, "Req.users");
-      return {
-        ...req.body,
-        author: req.users._id
-      }
-    }
-  },
+
   "Comment": {
     "body": (req) => {
       console.log(req.users, "req是什么");

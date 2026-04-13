@@ -8,53 +8,25 @@
  */
 
 // //缓存算法，缓存最近看的5篇文章
-// const LRUCacheFactory = (capacity) => {
-//   const cache = new Map();
-//   const LRUCache = {};
-//   //Map对象保存键值对，并且能够记住见的原始插入顺序
-//   const get = (key) => {
-//     if (!cache.has(key)) {
-//       console.log('没有key');
-//       return ;
-//     }
-//     let temp = cache.get(key);
-//     cache.delete(key);
-//     cache.set(key, temp);
 
-//     return temp;
-//   };
-//   const set = (key, value) => {
-//     if (cache.has(key)) {
-//       cache.delete(key);
-//     } 
-//     if (cache.size >= capacity) {
-//       cache.delete(cache.keys().next().value);
-//     }
-//     cache.set(key, value);
-//   };
-//   LRUCache.get = get;
-//   LRUCache.set = set;
 
-//   LRUCache[Symbol.iterator] = () => cache[Symbol.iterator];
-
-//   return LRUCache
-// };
-
-import { ref, inject } from "vue";
+import { ref, inject, shallowRef } from "vue";
 import { defineStore } from "pinia";
 
 export const useArticleStore = defineStore('article', () => {
+  //articles
   const articles = ref([]);
   const nextPage = ref(1);
   const finished = ref(false);
   const loading = ref(false);
   const {useApi} = inject('api');
-
+  const refreshing = ref(false);
 
   const resetArticles = () => {
     nextPage.value = 1;
     finished.value = false;
     loading.value = false;
+    articles.value.length = 0;
   };
 
  //默认请求
@@ -69,7 +41,8 @@ export const useArticleStore = defineStore('article', () => {
 
   const getArticels = async (query = {}, {
     reset = false,
-    search = false
+    search = false, 
+    refresh = false,
   } = {}) => {
     //说明已经加载完毕了
     let requestFn = defaultGetArticle;
@@ -78,15 +51,20 @@ export const useArticleStore = defineStore('article', () => {
       requestFn = searchArticle;
     }
 
-    if (reset) {
+    if (reset || refresh) {
       resetArticles();
     }
-
     if (finished.value) {
       return;
     }
-    loading.value = true;
 
+    if (!refreshing.value) {
+      loading.value = true;
+    } else {
+      refreshing.value = true;
+    }
+
+console.log(query, "query");
     const data = {
       curPages: nextPage.value,
       ...query
@@ -114,14 +92,25 @@ export const useArticleStore = defineStore('article', () => {
       //表示所有的数据都被查找完毕了,通知子组件,数据加载完毕
       finished.value = true;
     }
-    loading.value = false;
+    if (!refreshing.value) {
+      loading.value = false;
+    } else {
+      refreshing.value = false;
+    }
   };
+
+  const refreshArticle = async () => {
+    await getArticels({}, {refresh: true});
+  };
+
 
 
   return {
     articles,
     finished,
     loading,
-    getArticels
+    getArticels,
+    refreshing,
+    refreshArticle
   }
 });

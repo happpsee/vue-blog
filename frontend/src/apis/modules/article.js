@@ -8,11 +8,11 @@
  */
 export default {
   "articles": {
-    url: "/api/articles",
+    url: "/article",
     method: "GET"
   },
   "articleAdd": {
-    url: "/api/articles",
+    url: "/article",
     method: "POST",
     withToken: true
   },
@@ -22,17 +22,23 @@ export default {
     withToken: true
   },
   "pubComment": {
-    url: "/api/comments",
+    url: "/article/addcomment",
     method: "POST",
     withToken: true
   },
   "articleSearch": {
-    url: "/articles/search",
+    url: "/article/api/search",
     method: "GET"
   },
   "articleDetail": {
-    url: "/api/articles/id",
+    url: "/article/id",
     method: "GET",
     dynamic: true
+  },
+  "articleLike": {
+    url: "/article/like",
+    custom: true,
+    method: "GET",
+    withToken: true
   }
 }

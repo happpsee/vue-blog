@@ -2,23 +2,25 @@
   <div class="head-container">
     <el-row tag="header" class="head" align="middle" justify="center">
       <el-row class="head-inner" justify="center" align="middle">
-        <el-col :span="2">
+        <el-col :span="0" :sm="2">
           <h2 class="logo-container">
             <img class="logo" src="/logo.svg" alt="logo" />
           </h2>
         </el-col>
 
-        <el-col :span="8" :push="1">
+        <el-col 
+        :span="0"
+        :lg="8" 
+        :push="1">
           <el-input v-model="input" @keyup.enter="searchArticle" placeholder="搜索文章" class="search-input"></el-input>
         </el-col>
 
-        <el-col :span="12" :push="1">
+        <el-col :span="24" :sm="20" :lg="14" :push="1">
           <el-row align="middle" justify="end" class="nav">
             <router-link v-for="nav in navs" :key="nav.path" :to="nav.path" class="nav-link"><span>{{ nav.text
                 }}</span></router-link>
-
             <template v-if="!loginStore.isLogin">
-              <span class="auth-link login-link" @click="activateForm('login')">登录</span>
+              <span class="auth-link login-linky" @click="activateForm('login')">登录</span>
               <span class="auth-link register-link" @click="activateForm('registry')">注册</span>
               <Teleport to="body">
                 <KeepAlive>
@@ -28,6 +30,20 @@
                 </KeepAlive>
               </Teleport>
             </template>
+              <el-popconfirm
+              v-else
+              confirm-button-text="登出"
+              cancel-button-text="取消"
+              icon-color="#606266"
+              title="确定退出登录吗？"
+              @confirm="logout">
+              <template #reference>
+                <span class="flex items-center nav-link cursor-pointer">
+                  <ElIcon custom="logout.svg" width="30px" height="30px"></ElIcon>
+                  <span>退出登录</span>
+                </span>
+              </template>
+              </el-popconfirm>
           </el-row>
         </el-col>
       </el-row>
@@ -37,12 +53,13 @@
 
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { useLoginStore } from '@/stores/modules/login.js';
 import { ElCol, ElRow } from 'element-plus';
 import { useArticleStore } from "@/stores/modules/article";
 import { ElNotification } from 'element-plus';
 import Login from "@/views/Login/index.vue";
+import {useRouter} from 'vue-router';
 
 defineOptions({
   name: 'BaseHeader'
@@ -57,8 +74,10 @@ const navs = ref([
   { text: '首页', path: '/' },
   { text: '分类', path: '/classify' },
   { text: '写文章', path: '/write' },
+  { text: "聊天室", path: "/chat" },
   { text: '用户信息', path: '/userinfo' }
 ]);
+const router = useRouter();
 
 
 let oldSearchContent = "";
@@ -70,7 +89,6 @@ const searchArticle = async () => {
     });
     return;
   }
-  console.log("发请求了");
 
   oldSearchContent = input.value;
   await articleStore.getArticels({ search: input.value }, {
@@ -80,16 +98,21 @@ const searchArticle = async () => {
 };
 
 
-
-
 const activateForm = (type) => {
   console.log(type, 'loginType.value');
   loginType.value = type;
   show.value = true;
 };
 
-
-
+const logout = () => {
+  ElNotification.warning({ 
+    title: "再见!",
+    message: "您已成功退出登录状态",
+    duration: 5000
+  });
+  loginStore.logout();
+  router.replace("/");
+}
 
 </script>
 
@@ -160,8 +183,7 @@ const activateForm = (type) => {
   &:hover
     background-color rgba(0, 0, 0, 0.05)
 
-.login-link
-  margin-right spacing_sm
+
 
 .register-link
   &:hover

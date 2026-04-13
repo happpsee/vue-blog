@@ -57,15 +57,16 @@ watch(type, () => {
   title.value = allConfig[type.value].title;
   formConfig.value = allConfig[type.value].formItems;
   btns.value = allConfig[type.value].btns;
-  console.log(allConfig[type.value], 'allConfig-type');
   [formFields.value, validate.value] = allConfig[type.value].formItems.reduce((acc, curr) => {
     acc[0][curr.query] = props.initFormFields[curr.query] ?? null;
-    console.log(curr.query, 'props.initFormFields');
     acc[1][curr.query] = validateMap[curr.query];
     return acc;
   }, [{}, {}]);
   curHandleBtnFunc.value = props.handleBtn;
-    
+  setTimeout(() => {
+    formRef.value && formRef.value.resetFields();
+  }, 0)
+  
 }, {
   immediate: true
 });

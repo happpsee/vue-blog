@@ -8,13 +8,13 @@
  */
 export default {
   "registry": {
-    url: "/register",
+    url: "/user/register",
     method: "POST",
     rsaKey: ["password"],
     setToken: true
   },
   "login": {
-    url: "/login",
+    url: "/user/login",
     method: "POST",
     rsaKey: ["password"],
     setToken: true

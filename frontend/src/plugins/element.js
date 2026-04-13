@@ -26,7 +26,9 @@ import {
   ElSelect,
   ElOption,
   ElUpload,
-  ElImage
+  ElImage,
+  ElLoading,
+  ElPopconfirm
 } from 'element-plus'
 
 
@@ -57,7 +59,8 @@ const components = [
   ElSelect,
   ElOption,
   ElUpload,
-  ElImage
+  ElImage,
+  ElPopconfirm
 ];
 
 const customElComponents = [
@@ -82,5 +85,7 @@ export const setupElement = (app) => {
     --i;
     app.component(cusComps[i].name, cusComps[i]);
   }
+
+  app.use(ElLoading);
 
 };

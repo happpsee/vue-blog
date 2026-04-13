@@ -7,16 +7,11 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import AutoImport from 'unplugin-auto-import/vite';
-import Components from 'unplugin-vue-components/vite';
-import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
-
-
 import { fileURLToPath} from 'node:url'
 import path from 'node:path'
 import tailwindcss from '@tailwindcss/vite';
-
+import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 
 
 const dirname = path.resolve(fileURLToPath(import.meta.url), '../');
@@ -29,7 +24,13 @@ export default defineConfig({
       '@': path.resolve(dirname, './src'),
     } 
   },
+  server: {
+    host: "0.0.0.0",
+  },
   css: {
+    modules: {
+      localsConvention: 'camelCaseOnly',
+    },
     preprocessorOptions: {
       stylus: {
         paths: [path.resolve(dirname, './src')]
@@ -38,7 +39,7 @@ export default defineConfig({
   },
   plugins: [
     vue(),
-    tailwindcss()
-    
+    vueJsx(),
+    tailwindcss(),
   ],
 })

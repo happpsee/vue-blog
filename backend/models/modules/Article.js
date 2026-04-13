@@ -17,7 +17,7 @@
 const mongoose = require("mongoose");
 const { formatTime } = require("../../utils");
 
-const schema = new mongoose.Schema({
+module.exports = {
   title: {
     type: mongoose.SchemaTypes.String,
     required: [true, "必须填写文章标题"],
@@ -67,6 +67,11 @@ const schema = new mongoose.Schema({
     type: mongoose.SchemaTypes.Number,
     default: 0
   },
+  //收藏量
+  starNums: {
+    type: mongoose.SchemaTypes.Number,
+    default: 0
+  },
   author: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: "User"
@@ -80,12 +85,14 @@ const schema = new mongoose.Schema({
   ],
   column: {
     type: mongoose.SchemaTypes.ObjectId,
-    ref: "Column",
-    default: "暂无分栏"
-  }
-})
+    ref: "Column"
+  },
+  like_users: [
+    {
+      type: mongoose.SchemaTypes.ObjectId,
+    }
+  ]
+}
 
-schema.set("toJSON", {getters: true});
-module.exports = mongoose.model("Article", schema);
 
 

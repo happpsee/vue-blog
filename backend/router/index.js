@@ -6,21 +6,32 @@
  * @FilePath: \徐晨冰_Node_20250120\第五十天\express-login\router\index.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-const {loginRouter} = require("./modules/loginRouter");
-const { registerRouter} = require("./modules/registerRouter");
-const { busRouter } = require("./modules/busRouter");
-const {pubKeyRouter} = require("./modules/pubKeyRouter");
-const {uploadRouter} = require("./modules/uploadRouter");
-const {artLikeRouter} = require("./modules/artLikesRouter");
-const {searchRouter} = require("./modules/searchRouter");
-const {userRouter} = require("./modules/userRouter");
+
+const { routes } = require("./routes");
+const getModule = (moduleStr) => {
+  moduleStr = moduleStr[0].toUpperCase() + moduleStr.slice(1);
+  moduleStr = moduleStr.slice(0, moduleStr.length - 1);
+  return moduleStr;
+};
+
+
+const setupRouter = (app) => {
+  for (let i = 0, route; route = routes[i]; i++) {
+    app.use(route.path, (req, _, next) => {
+      
+      if (req.params.resource) {
+        req.Model = req.app.locals.Model[getModule(req.params.resource)];
+      } else {
+        req.Model = req.app.locals.Model;
+      }
+      
+      next();
+    }, route.router);
+  }
+}
+
+
+
 module.exports = {
-  loginRouter,
-  registerRouter,
-  busRouter,
-  pubKeyRouter,
-  uploadRouter,
-  artLikeRouter,
-  searchRouter,
-  userRouter
+  setupRouter
 }

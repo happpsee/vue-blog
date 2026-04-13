@@ -1,15 +1,14 @@
 <template>
     <el-container class="layout" direction="vertical">
         <Header/>
-        
-        <el-row class="content-wrapper">
-          <el-col :span="7">
+
+        <div class="content-wrapper">
             <BaseAside />
-          </el-col>
-          <el-col :push="1" :span="16">
+            <div class="main">
              <Main />
-          </el-col>
-        </el-row>
+            </div>
+
+        </div>
        
       
     </el-container>
@@ -37,24 +36,29 @@ defineOptions({
 @import "styles/variable.styl"
 
 .layout
-  width 1200px
+  width: 1200px;
   margin 0 auto
   min-height 100vh
   padding 0 spacing_md
+
+@media only screen and (max-width: 1200px) {
+  .layout {
+    width: 100%;
+  }
+}
+
+.main
+  width 800px;
 
 .content-wrapper
   margin-top spacing_2xl
   margin-bottom spacing_2xl
   display flex
-  gap spacing_lg
+  justify-content center
+  column-gap spacing_xl
 
 @media (max-width: 768px)
   .layout
     width 100%
     padding 0 spacing_sm
-  
-  .content-wrapper
-    flex-direction column
-    margin-top spacing_xl
-    margin-bottom spacing_xl
 </style>

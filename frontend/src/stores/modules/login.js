@@ -18,9 +18,12 @@ export const useLoginStore = defineStore('login', {
       this.isLogin = true;
       console.log(this.isLogin, 'thios.isLogin');
       this.setUserInfo(userInfo);
+      //登录成功后
     },
     logout() {
       this.isLogin = false;
+      this.setUserInfo(null);
+      store.set(import.meta.env.VITE_TOKEN_KEY, null);
     },
     setUserInfo(userInfo) {
       this.userInfo = userInfo;

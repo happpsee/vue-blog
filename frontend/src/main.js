@@ -10,41 +10,50 @@ import { createApp } from 'vue'
 import {router} from '@/router/index.js';
 import { createPinia } from 'pinia';
 import { createSetupAxios } from '@/apis/index.js';
-import { setupElement } from '@/plugins/element';
 import App from './App.vue'
-import 'element-plus/dist/index.css'
-import '@/styles/element.css';
-import '@/styles/tailwind.css';
-import '@/styles/base.css';
-import "animate.css";
 import { useApi } from '@/apis/index.js';
+import { _isMobile } from '@/utils/index.js';
+import { setupPcApp } from './app_pc.js';
+import { setupMobileApp } from './app_mobile.js';
 import store from 'store';
 
-const app = createApp(App)
 
 
+const setupApp = () => {
+  const app = createApp(App);
+  const pinia = createPinia();
 
-const pinia = createPinia();
+  if (!_isMobile()) {
+    setupPcApp(app);
+  } else {
+    setupMobileApp(app);
+  }
 
-
-app.use(setupElement);
-app.use(pinia);
-app.use(router);
-
-app.use(createSetupAxios, {
+  app.use(pinia);
+  app.use(router);
+  
+  app.use(createSetupAxios, {
     baseURL: import.meta.env.VITE_BASE_URL,
     timeout: import.meta.env.VITE_TIMEOUT
-});
+  }); 
+
+  store.get(import.meta.env.VITE_PUBLICK_KEY) || useApi("publicKey")
+  .then((ans) => {
+    console.log(ans, 'publicKey是');
+    store.set(import.meta.env.VITE_PUBLICK_KEY, ans.publicKey);
+  });
+  app.mount('#app');
+};
+
+setupApp();
+
+
+
+
 
 
 
 //合并接口
 
-store.get(import.meta.env.VITE_PUBLICK_KEY) || useApi("publicKey")
-  .then((ans) => {
-    // let publickKey = ans.publicKey.replace(/[\r\n]/g, '');
-    console.log(ans, 'publicKey是');
-    store.set(import.meta.env.VITE_PUBLICK_KEY, ans.publicKey);
-  });
 
-app.mount('#app');
+

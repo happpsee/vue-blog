@@ -1,17 +1,19 @@
-import { useTemplateRef, ref, computed, onBeforeMount } from "vue";
-import { ElNotification } from "element-plus";
+import { useTemplateRef, ref, computed, onBeforeMount, h } from "vue";
+import { ElNotification, ElText } from "element-plus";
 import { router } from "@/router";
+
 //处理element-plus 表单的相关逻辑
 export const useEditForm = ({useApi,  valueHtml, showSubmitDialog}) => {
   const uploadArticleCoverRef = useTemplateRef("uploadArticleCover");
+  const classifyFormRef = useTemplateRef("classifyForm");
   //表单数据
   const submitForm = ref({
     title: "",
-    cover: "",
+    cover: [],
     column: "",
     summary: ""
   });
-  const columns = ref(null);
+  const columns = ref([]);
 
   const articleCoverUrl = computed(() => {
     if (!submitForm.value.cover || submitForm.value.cover.length <= 0) {
@@ -32,6 +34,8 @@ export const useEditForm = ({useApi,  valueHtml, showSubmitDialog}) => {
       showSubmitDialog.value = false;
       return false;
     }
+
+    
 
     const coverFormdata = new FormData();
 
@@ -78,9 +82,27 @@ export const useEditForm = ({useApi,  valueHtml, showSubmitDialog}) => {
       return false;
     }
   };
-  onBeforeMount(async () => {
+
+  const updateClassify = async () => {
     const { data } = await useApi("column");
     columns.value = data;
+  };
+
+  onBeforeMount(async () => {
+    await updateClassify();
+    if (columns.value.length  <= 0) {
+      let notification = ElNotification.warning({
+        title: '没有文章分类!',
+        duration: 3000,
+        showClose: false,
+        onClick: () => {
+          classifyFormRef.value.openAddDialog();
+          notification.close();
+        },
+        message: () => h(ElText, { type: 'primary', size: 'small', style: {cursor: "pointer"} }, () => '请点击这里创建文章分类!')
+      });
+    }
+
   });
 
   return {
@@ -88,6 +110,7 @@ export const useEditForm = ({useApi,  valueHtml, showSubmitDialog}) => {
     columns,
     articleCoverUrl,
     handleExceed,
-    btnAgency
+    btnAgency,
+    updateClassify
   };
 };

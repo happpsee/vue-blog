@@ -6,10 +6,9 @@
  * @FilePath: \徐晨冰_Node_20260119\第四十九天\express-login\models\modules\User.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-const mongoose = require("mongoose");
 const { encrypt, decrypt } = require("../../core");
-
-const schema = mongoose.Schema({
+const mongoose = require("mongoose");
+module.exports =  {
   username: {
     type: mongoose.SchemaTypes.String,
     required: [true, "必须填写用户名"],
@@ -23,26 +22,7 @@ const schema = mongoose.Schema({
   },
   password: {
     type: mongoose.SchemaTypes.String,
-    required: [true, "必须填写密码"],
-    validate: {
-      validator: function (val) {
-        val = decrypt(val);
-        console.log(val, "val值是什么");
-        return /^[a-zA-Z0-9\_\-\=]{3,16}$/gi.test(val);
-      },
-      message: () => "密码格式不正确!"
-    },
-    set (val) {
-      console.log(encrypt(val), '看看加密后的样子');
-      return encrypt(val)
-    },
-    get (val) {
-      console.log(val, '看看原文');
-      return decrypt(val);
-    }
-
-// kaW2b9yUHomp4e1jPvn+BI161/QaxhNthM79YbihQc5xhrp4pC9PsR5v+Sn76ezMK5xbV7JYA66p5nUSxJwdCUZ6Z6kLVch8UAoYEUcU6DOqOkok6q+ODsPaQcPdC94yhqBx6vbjIX9LrCO6nloVFJsKnVwIr2eCAFruxl6C2teqB499gXVcz1EKdU6ASjGg4fZMIczuPbC6LN0GmBiBJok5ZpbFZlz/BmJo/ZqeRBC4SIrlhv0msFN9OIcjoKlYRrUnz5k2sF2xljPpj35y7/xfMS/DybMb1ICP92CXtSZhZOAQ2jqPFmk4/5nHPv+tRNMqTOAKSUjKmukn+X3HhA==
-
+    required: [true, "必须填写密码"]
   },
   email: {
     type: mongoose.SchemaTypes.String,
@@ -78,6 +58,4 @@ const schema = mongoose.Schema({
     type: String,
     default: '这个人很懒, 什么都没有写 ^_^'
   }
-})
-schema.set("toJSON", {getters: true});
-module.exports = mongoose.model("User", schema);
+}

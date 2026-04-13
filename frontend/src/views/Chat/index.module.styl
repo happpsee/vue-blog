@@ -1,0 +1,60 @@
+@import "../../styles/variable.styl"
+
+.chat-wrap
+  bd()
+  bdRadius()
+  boxSdwCard()
+  width  100%
+  height 720px
+  background-color chat_bg_color
+
+.chat-list
+  flex 1
+  padding spacing_xl
+  overflow auto
+
+.input-wrap
+  width 100%
+  padding spacing_md
+  border-top 1px solid border_color
+  background-color bg_color
+
+.input
+  boxSdwCard()
+  width 100%
+  min-height 70px
+  max-height 300px
+  padding spacing_md
+  border 1px solid border_color
+  border-radius border_radius_md
+  resize none
+  font-family font_family
+  font-size 0.875rem
+  line-height 1.5
+  color text_color
+  transition transition_default
+  field-sizing content
+  background-color bg_color
+  &:focus
+    bd()
+    outline none
+    box-shadow 0 0 0 2px rgba(37, 99, 235, 0.1)
+
+.send-btns
+  width 100%
+  display flex
+  justify-content flex-end
+  margin-top spacing_md
+
+
+.msg-box
+  bdRadius()
+  ttColorCommon()
+  bgColorCommon()
+  max-width 75%
+  margin-right spacing_sm
+  padding spacing_md
+
+
+.tool-btn+.tool-btn 
+  margin-left 0 !important

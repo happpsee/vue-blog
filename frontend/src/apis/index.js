@@ -12,9 +12,9 @@ const requestMap = Object.values(import.meta.glob("./modules/*.js", {
 
 
 //封装useApi
-export const useApi = (name, data, config = {}) => {
+export const useApi = (name, data = {}, config = {}) => {
   return defineRequest(({request, context}) => {
-    const cfg = context.requestMap[name];
+    const cfg = {...context.requestMap[name]};
 
     if (!cfg) {
       throw new Error(`接口 "${name}" 不存在`);
@@ -50,10 +50,17 @@ export const useApi = (name, data, config = {}) => {
     }
 
     if (cfg.dynamic) {
+      console.log(cfg.url, "cfg.url");
       cfg.url = cfg.url.replace(/\/([^\/]+)/g, ($1, capture) => {
+        console.log(capture, data, "cfg.url", cfg.url);
         return data[capture] ? '/' + data[capture] : $1;
       });
       data = {};
+    }
+
+    if (data.path && cfg.custom) {
+      cfg.url = data.path;
+      delete data.path;
     }
 
     if (cfg.method.toUpperCase() === 'GET') {

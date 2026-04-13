@@ -19,7 +19,7 @@ const {UID_MAP} = require("../../plugins/UID_MAP.js");
 const assert = require("http-assert");
 const { POP_PUT_MAP, handlePopPut } = require("../../plugins/POP_PUT_MAP");
 const RESOURCE_POST_MAP = require("../../plugins/RESOURCE_POST_MAP");
-
+const {FILTER_MAP} = require("../../plugins/FILTER_MAP.js");
 
 //查询列表分页
 router.get("/", async (req, res, next) => {
@@ -64,6 +64,8 @@ router.get("/:id", async (req, res, next) => {
     if (modelName in POPULATE_MAP) {
       let populates =  POPULATE_MAP[modelName];
       const result = await req.Model.findById(req.params.id).populate(populates);
+
+
       res.json({
         code: 200,
         data: result,
@@ -73,6 +75,14 @@ router.get("/:id", async (req, res, next) => {
     }
 
     const result = await req.Model.findById(req.params.id);
+
+
+    if (modelName in FILTER_MAP) {
+      result = FILTER_MAP[modelName](result, req.users);
+    }
+
+    console.log(modelName, 'nodemoal');
+
     res.json({
       code: 200,
       data: result,

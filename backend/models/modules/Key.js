@@ -8,7 +8,7 @@
  */
 const mongoose = require("mongoose");
 
-const schema = new mongoose.Schema({
+module.exports = {
   name: mongoose.SchemaTypes.String,
   content: {
     type: String,
@@ -18,6 +18,4 @@ const schema = new mongoose.Schema({
     type: mongoose.SchemaTypes.Date,
     default: Date.now
   }
-});
-
-module.exports = mongoose.model("Key", schema);
+};

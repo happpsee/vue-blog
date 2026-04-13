@@ -70,6 +70,8 @@ const {article} = defineProps({
     default: {}
   }
 });
+
+console.log(article, 'article');
 </script>
 
 <style lang="stylus" scoped>

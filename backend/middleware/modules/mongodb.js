@@ -9,7 +9,7 @@
 
 const mongoose = require("mongoose");
 
-const connectMongoose = async () => {
+const setupMongoose = async () => {
   await mongoose.connect("mongodb://113.46.151.113:27017/blog", {
     user: 'admin',
     pass: '123456',
@@ -17,17 +17,14 @@ const connectMongoose = async () => {
   });
 
   let db = mongoose.connection;
-
   db.on("open", () => {
     console.log("mongodb://127.0.0.1:27017/bdb_blog 连接成功");
   });
-
 };
 
-connectMongoose();
 
 
 
 module.exports = {
-  connectMongoose
+  setupMongoose
 };

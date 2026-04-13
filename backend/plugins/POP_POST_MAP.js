@@ -26,20 +26,7 @@ const POP_POST_MAP = {
       }
     }
   ],
-  Article: [
-    {
-      "refField": "column",
-      "model": Column,
-      "queryAction": "findByIdAndUpdate",
-      "updateOptions": ({_id}) => {
-        return {
-          $push: {
-            "aids": _id
-          }
-        }
-      }
-    }
-  ]
+
 }
 
 

@@ -8,7 +8,7 @@
  */
 const mongoose = require("mongoose");
 
-const schema = mongoose.Schema({
+module.exports = {
   content: {
     type: mongoose.SchemaTypes.String,
     required: [true, "必须填写评论内容"]
@@ -29,5 +29,4 @@ const schema = mongoose.Schema({
     type: mongoose.SchemaTypes.ObjectId,
     ref: "User"
   }
-});
-module.exports = mongoose.model("Comment", schema);
+};

@@ -5,3 +5,5 @@ export const allConfig = Object.values(import.meta.glob(["./config/fields/*.js"]
   acc[key] = value;
   return acc;
 }, {});
+
+console.log(allConfig, "看看allConfig是什么");

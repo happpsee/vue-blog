@@ -1,2 +1,6 @@
 :root {--el-color-primary: #c0c4cc;
 }
+
+.el-button [class*=el-icon]+span {
+  margin-left: 0;
+}

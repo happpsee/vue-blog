@@ -12,7 +12,7 @@ const router = express.Router();
 
 const path = require("path");
 
-const {staticPath, maxFileSize, host} = require("../../utils/config");
+const {staticPath, maxFileSize, host} = require("../../config");
 const assert = require("http-assert");
 
 const createError = require("http-errors");

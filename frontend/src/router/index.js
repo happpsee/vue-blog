@@ -9,23 +9,63 @@
 import nProgress from 'nprogress';
 import { createWebHashHistory } from 'vue-router';
 import { createRouter } from 'vue-router';
+import { ElNotification } from "element-plus";
+import { useLoginStore } from '@/stores/modules/login';
+import { _isMobile } from '@/utils/index';
 
 
-const modules = import.meta.glob(['./modules/*.js', '!./modules/login.js'], {
+
+
+const originRoutes = Object.groupBy(Object.values(import.meta.glob(['./modules/*.js', '!./modules/login.js'], {
   eager: true
+})).reduce((acc, module) => {
+  let item = module.default;
+  if (Array.isArray(item)) {
+    acc.push(...item);
+  } else {
+    acc.push(item);
+  }
+
+  return acc;
+}, []), (item) => {
+  if (!item.__tag) {
+    item.__tag = "pc"; //默认优先pc
+  }
+  return item.__tag;
 });
 
-let routes = Object.values(modules).map(module => module.default);
+let routes;
+if (!_isMobile()) {
+  routes = originRoutes.pc;
+} else {
+  routes = originRoutes.mobile;
+}
 
-console.log(routes, 'routes');
 
+
+console.log("看看routes", routes);
 export const router = createRouter({
   history: createWebHashHistory(),
   routes,
 });
 
-router.beforeEach(() => {
+
+router.beforeEach((to, from) => {
+  if (to.meta.needAuth) {
+    const loginStore = useLoginStore();
+    if (!loginStore.isLogin) {
+      ElNotification({
+        message: "请先登录",
+        type: "info",
+        duration: 2000,
+        showClose: false
+      });
+      return { name: "article"};
+    }
+  }
   nProgress.start();
+
+  return true;
 });
 
 router.afterEach(() => {

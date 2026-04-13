@@ -27,7 +27,7 @@
       :close-on-press-escape="false">
         <el-form  :model="submitForm">
 
-          <el-form-item label="文章封面" prop="cover">
+          <el-form-item label="文章封面">
             <el-upload 
             v-model:file-list="submitForm.cover"
             ref="uploadArticleCover"
@@ -55,7 +55,7 @@
               v-for="column in columns"
               :key="column._id"
               :label="column.name"
-              :value="column._id"
+              :value="column.id"
               ></el-option>
             </el-select>
           </el-form-item>
@@ -78,6 +78,10 @@
       </el-dialog>
     </teleport>
 
+    <teleport to="body">
+      <ClassifyForm ref="classifyForm" @updateClassify="updateClassify"/>
+    </teleport>
+
   </div>
 </template>
 
@@ -88,6 +92,7 @@ import { useWangEditor } from './compsables/useWangEditor';
 import { Plus } from '@element-plus/icons-vue';
 import { inject, ref} from 'vue';
 import { useEditForm } from './compsables/useEditForm';
+import ClassifyForm from "@/components/Form/classify.vue";
 defineOptions({
   name: 'ArticleEditor'
 });
@@ -95,7 +100,7 @@ defineOptions({
 const { useApi } = inject('api');
 const showSubmitDialog = ref(false);
 const { editorRef, valueHtml, toolbarConfig, editorConfig, handleCreated } = useWangEditor({useApi});
-const { submitForm, columns, articleCoverUrl,  handleExceed, btnAgency } = useEditForm({useApi,  valueHtml, showSubmitDialog});
+const { submitForm, columns, articleCoverUrl,  handleExceed, btnAgency, updateClassify } = useEditForm({useApi,  valueHtml, showSubmitDialog});
 
 
 const submitArticle = () => {
