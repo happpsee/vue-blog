@@ -1,5 +1,4 @@
 import {h} from 'vue';
-import { ElCol } from 'element-plus';
 export default {
   name: 'ElCol',
   props: {

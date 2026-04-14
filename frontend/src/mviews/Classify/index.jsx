@@ -28,7 +28,7 @@ export default defineComponent({setup() {
   const loadClassify = async () => {
     let { data } = await useApi("column");
     classies.value = data;
-    curClassify.value = data[0].id;
+    curClassify.value = data[0]?.id || null;
     return data;
   }
 
@@ -47,15 +47,16 @@ export default defineComponent({setup() {
 
   return () => (
     <div class={classifyClass.classifyWrap}>
-      <DelayComp loadFnc={loadClassify} >
+      {      <DelayComp loadFnc={loadClassify} >
         {{
           default: (result) => (
             <div class={classifyClass.classifyTabs}>
-              <van-tabs v-model:active={curClassify.value} swipe-threshold={5}>
+
+              { classies.value.length > 0 ? <van-tabs v-model:active={curClassify.value} swipe-threshold={5}>
                 {result.map(item => 
                   (<van-tab title={item.name} key={item.id} name={item.id}></van-tab>)
                 )}
-              </van-tabs>
+              </van-tabs> : null }
 
               { (+classifyData.value.length) > 0 ? classifyData.value.map(article => (
                 <div
@@ -74,12 +75,11 @@ export default defineComponent({setup() {
                   </van-divider>
                 </div>
               )): (<van-empty description="暂无更多文章数据， 快去写一篇吧" />)}
-
             </div>
 
           )
         }}
-      </DelayComp>
+      </DelayComp>}
     </div>
   );
 }});

@@ -5,7 +5,6 @@ import { useRouter } from "vue-router";
 
 export default defineComponent({setup() {
   const articleStore = useArticleStore();
-  const router = useRouter();
   const articles = computed(() => articleStore.articles);
   
   return () => (<div  class={articleClass.articleList} >

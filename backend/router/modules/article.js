@@ -68,10 +68,11 @@ router.get("/:id", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    console.log(req.users, "req.users是什么1");
+    console.log(req.users._id, "req.users是什么1");
     let body =  { ...req.body, author: req.users._id };
     const ansModel = await req.Model.Article.create(body);
 
+    console.log(ansModel, "ansModel", ansModel._id);
   await req.Model.Column.findByIdAndUpdate(body.column, {
     $push: {
       "aids": ansModel._id

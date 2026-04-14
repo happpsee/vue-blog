@@ -41,11 +41,12 @@ export default defineComponent({
     refreshArticle();
   });
   
-    return () => (
-     <van-pull-refresh
+    return () => (<div style="height: 100%">
+      {articles.value.length <= 0 ? <van-empty description="暂无文章" /> :      <van-pull-refresh
       class={articleClass.articleList} 
      v-model={refreshing.value}
-     onRefresh={refreshArticle}>
+     onRefresh={refreshArticle}
+     pull-distance={100}>
       <van-list
       v-model:loading={loading.value}
       finished={finished.value}
@@ -71,7 +72,8 @@ export default defineComponent({
         ))
         }
       </van-list> 
-        </van-pull-refresh>
-    )
+        </van-pull-refresh>}
+
+      </div>)
   }
 });

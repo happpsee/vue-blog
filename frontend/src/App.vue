@@ -8,17 +8,24 @@
 -->
 
 <script>
-import {h} from 'vue';
-import Layout from '@/views/Base/Layout.vue';
+import {h, onMounted, shallowRef} from 'vue';
 import { _isMobile } from '@/utils/index';
-import mLayout from "@/mviews/Layout.jsx"
 
 export default {
   name: 'App',
-  render: () => {
-    return h('div', {id: 'app'}, [
-      !_isMobile() ? h(Layout) : h(mLayout)
-    ])
+  setup: () => {
+
+    let layout = shallowRef(h("text", "加载中..."));
+    
+    onMounted(async () => {
+      if (!_isMobile()) {
+        layout.value = (await import("./views/Base/Layout.vue")).default;
+      } else {
+        layout.value = (await import("./mviews/Layout.jsx")).default;
+      }
+    });
+
+    return () => h('div', {id: 'app'}, h(layout.value))
   }
 }
 </script>

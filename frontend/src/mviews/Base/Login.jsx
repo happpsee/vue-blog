@@ -4,18 +4,8 @@ import loginClass from "./styls/login.module.styl";
 import { showSuccessToast, showFailToast } from "vant";
 import { useLoginStore } from "@/stores/modules/login";
 import { useRoute, useRouter } from "vue-router";
+import validateRule from "@/components/Form/config/validateMobile";
 
-const validateRule = {
-  username: [
-    { required: true, message: '账号必填'},
-    { pattern: /^(?!\d+$)(?![a-zA-Z]+$)[a-zA-Z0-9]{4,12}$/, message: '账号格式 数字+字母 6-8位'}],
-  email: [
-    { required: true, message: '邮箱必填'},
-    { type: 'email', message: '请输入正确的邮箱格式'}],
-  password: [
-    { required: true, message: '密码必填' },
-    { pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!.#*?&]{8,12}$/, message: '密码格式 至少包含大写字母+小写字母+数字 8-12位'}]
-}
 
 
 const FormComp = defineComponent({ emits: ["submit"],props: ["type"],setup: (props, {emit}) => {

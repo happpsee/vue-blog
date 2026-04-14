@@ -7,30 +7,24 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import { createApp } from 'vue'
-import {router} from '@/router/index.js';
+import {setupRouter} from '@/router/index.js';
 import { createPinia } from 'pinia';
 import { createSetupAxios } from '@/apis/index.js';
 import App from './App.vue'
 import { useApi } from '@/apis/index.js';
 import { _isMobile } from '@/utils/index.js';
-import { setupPcApp } from './app_pc.js';
-import { setupMobileApp } from './app_mobile.js';
 import store from 'store';
 
 
 
-const setupApp = () => {
+const setupApp = async () => {
   const app = createApp(App);
   const pinia = createPinia();
-
-  if (!_isMobile()) {
-    setupPcApp(app);
-  } else {
-    setupMobileApp(app);
-  }
-
   app.use(pinia);
+  const {router, messageAdapter} = await setupRouter(app);
+  app.provide("messageAdapter", messageAdapter);
   app.use(router);
+  app.provide("setupComp", (callback) => app.use(callback));
   
   app.use(createSetupAxios, {
     baseURL: import.meta.env.VITE_BASE_URL,

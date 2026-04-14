@@ -1,11 +1,11 @@
 import { useTemplateRef, ref, computed, onBeforeMount, h } from "vue";
-import { ElNotification, ElText } from "element-plus";
-import { router } from "@/router";
+import { useRouter } from "vue-router";
 
 //处理element-plus 表单的相关逻辑
 export const useEditForm = ({useApi,  valueHtml, showSubmitDialog}) => {
   const uploadArticleCoverRef = useTemplateRef("uploadArticleCover");
   const classifyFormRef = useTemplateRef("classifyForm");
+  const router = useRouter();
   //表单数据
   const submitForm = ref({
     title: "",

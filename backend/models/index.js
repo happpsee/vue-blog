@@ -16,12 +16,12 @@ const setupModel = async (app) => {
     }
     schema.options.toJSON.transform = function (doc, ret) {
       console.log(ret._id);
-      delete ret.__v;
-      delete ret._id;
+     ret.__v && delete ret.__v;
+     ret._id && delete ret._id;
 
-      if (ret.author) {
-        delete ret.author.id;
-      }
+      // if (ret.author && typeof ret.author === "object" && "id" in ret.author) {
+      //   delete ret.author.id;
+      // }
 
       return ret;
     }

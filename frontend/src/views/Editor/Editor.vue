@@ -86,8 +86,8 @@
 </template>
 
 <script setup>
-import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
 import "@wangeditor/editor/dist/css/style.css";
+import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
 import { useWangEditor } from './compsables/useWangEditor';
 import { Plus } from '@element-plus/icons-vue';
 import { inject, ref} from 'vue';

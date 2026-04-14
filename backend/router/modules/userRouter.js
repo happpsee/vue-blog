@@ -45,13 +45,14 @@ router.post("/login", async (req, res, next) => {
       }
     ]);
 
+    console.log(articles, "articles看看你是什么");
     let  {password:_, ...userInfo} = JSON.parse(JSON.stringify(user));
     const articleNum = articles?.[0]?.articleNum;
     const readerNum = articles?.[0]?.readerNum;
-    articleNum && (userInfo.articleNum = articleNum);
-    readerNum && (userInfo.readerNum = readerNum);
 
-    const sse = req.app.locals.SSE;
+
+    (userInfo.articleNum = articleNum);
+    (userInfo.readerNum = readerNum);
 
     res.json({
       code: 200,

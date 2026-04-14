@@ -44,13 +44,13 @@ export default defineComponent({props: ["loadFnc"], setup(props, {slots}){
     done();
   });
 
-  return () => (<div>
+  return () => (<div style={{height: "100%"}}>
     {
     status.value === "fulfilled" ? slots.default(result.value) : (
       status.value === "delay" ? 
       (<van-skeleton style="--van-skeleton-paragraph-background: #FAFAFA; " row="8" />)  
       : 
-      null)
+      <p> </p>)
     }
     </div>);
 }});

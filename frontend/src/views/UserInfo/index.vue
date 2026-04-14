@@ -26,7 +26,6 @@
 <script setup>
 import BaseForm from "@/components/Form/index.vue";
 import { ref, onBeforeUnmount, inject } from "vue";
-import { ElNotification } from "element-plus";
 import { useLoginStore } from "@/stores/modules/login";
 import { useRouter } from "vue-router";
 

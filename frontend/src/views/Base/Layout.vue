@@ -21,6 +21,16 @@
 import Header from '@/views/Base/Header.vue';
 import Main from '@/views/Base/Main.vue';
 import BaseAside from '@/views/Base/Aside.vue';
+import '@/styles/element.css';
+import '@/styles/tailwind.css';
+import '@/styles/base.css';
+import "animate.css";
+import "nprogress/nprogress.css";
+import { inject } from 'vue';
+
+const {setMessage} = inject("messageAdapter");
+setMessage(ElNotification);
+
 
 defineOptions({
   name: "BaseLayout"

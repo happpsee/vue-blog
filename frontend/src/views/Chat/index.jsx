@@ -1,11 +1,12 @@
-import { ref, defineComponent, onMounted, Teleport, onBeforeUnmount, nextTick, watch, reactive, withKeys } from "vue";
+import { ref, defineComponent, onMounted, Teleport, resolveComponent, onBeforeUnmount, nextTick, watch, reactive, withKeys } from "vue";
 import io from "socket.io-client";
 import styles from "./index.module.styl";
 import store from "store";
 import { Plus } from "@element-plus/icons-vue";
-import { ElNotification } from "element-plus";
 import { useLoginStore } from "@/stores/modules/login.js";
 import {v4 as uuid} from "uuid";
+
+import { ElNotification, ElButton, ElInput, ElScrollbar, ElLoading, ElDialog } from "element-plus";
 const chatTypeMap = {
   //用户进入
   USERENTER: 1 << 0,
@@ -230,7 +231,7 @@ const ChatITem = defineComponent({
 
 
 const DisplayChats = defineComponent({
-  props: ["socket"], setup: (props, { expose, emit }) => {
+  props: ["socket"], directives: {loading: ElLoading}, setup: (props, { expose, emit }) => {
     const chatList = ref([]);
     const socket = props.socket;
     const msgListRef = ref();
@@ -245,6 +246,9 @@ const DisplayChats = defineComponent({
     watch(() => chatList.value.length, (newVal, oldVal) => {
       if (isSubmitMsg) {
         nextTick(() => {
+          if (!msgListRef.value?.wrapRef?.scrollHeight ) {
+            return false;
+          }
           let scrollTop = Math.max(0, msgListRef.value.wrapRef.scrollHeight - msgListRef.value.wrapRef.offsetHeight);
           msgListRef.value.setScrollTop(scrollTop);
           isSubmitMsg = false;
@@ -327,7 +331,7 @@ const DisplayChats = defineComponent({
 
 
     return () => (
-      <el-scrollbar 
+      <ElScrollbar 
       ref={msgListRef}
       onScroll={handleScroll}
       v-loading={loading.value}>
@@ -338,7 +342,7 @@ const DisplayChats = defineComponent({
             ))
           }
         </ul>
-      </el-scrollbar>
+      </ElScrollbar>
     );
   }
 });
@@ -347,22 +351,23 @@ const DisplayChats = defineComponent({
 
 const Tools = defineComponent({
   emits: ["openChangeDialog"], setup: (_, { emit }) => {
-    return () => (
+    return () => {  
+    return (
       <div>
         <div class="flex flex-col  items-center gap-y-4 circle-tool absolute top-2 -right-20">
           {tools.map((tool) => (
-            <el-button
+            <ElButton
               onClick={() => emit("openChangeDialog", tool)}
               icon={Plus}
               style={{ width: "50px", height: "50px" }}
               class={ [styles.toolBtn, "flex flex-col gap-y-1"]}>
               <span
                 style={{ fontSize: "8px" }}>{tool.title}</span>
-            </el-button>
+            </ElButton>
           ))}
         </div>
       </div>
-    );
+    )};
   }
 });
 

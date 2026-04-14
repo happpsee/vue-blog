@@ -9,65 +9,77 @@
 import nProgress from 'nprogress';
 import { createWebHashHistory } from 'vue-router';
 import { createRouter } from 'vue-router';
-import { ElNotification } from "element-plus";
 import { useLoginStore } from '@/stores/modules/login';
 import { _isMobile } from '@/utils/index';
+import "nprogress/nprogress.css";
 
 
 
+  
+export const messageAdapter = () => {
+let message;
+  const setMessage = (msgFn) => {
+    if (!_isMobile()) {
+      message = {
+        open: () => {
+          msgFn({
+            message: "请先登录",
+            type: "info",
+            duration: 2000,
+            showClose: true
+          });
+        }
+      }
+    } else {
+      message =  {
+        open: () => {
+          msgFn("请先登录");
+        }
+      }
+    }
+  };
+  const showMessage = () => {
+    return message.open();
+  };
 
-const originRoutes = Object.groupBy(Object.values(import.meta.glob(['./modules/*.js', '!./modules/login.js'], {
-  eager: true
-})).reduce((acc, module) => {
-  let item = module.default;
-  if (Array.isArray(item)) {
-    acc.push(...item);
-  } else {
-    acc.push(item);
+  return {
+    setMessage,
+    showMessage
   }
-
-  return acc;
-}, []), (item) => {
-  if (!item.__tag) {
-    item.__tag = "pc"; //默认优先pc
-  }
-  return item.__tag;
-});
-
-let routes;
-if (!_isMobile()) {
-  routes = originRoutes.pc;
-} else {
-  routes = originRoutes.mobile;
 }
 
 
-
-console.log("看看routes", routes);
-export const router = createRouter({
-  history: createWebHashHistory(),
-  routes,
-});
-
-
-router.beforeEach((to, from) => {
-  if (to.meta.needAuth) {
-    const loginStore = useLoginStore();
-    if (!loginStore.isLogin) {
-      ElNotification({
-        message: "请先登录",
-        type: "info",
-        duration: 2000,
-        showClose: false
-      });
-      return { name: "article"};
-    }
+export const setupRouter = async () => {
+  let routes;
+  if (!_isMobile()) {
+    routes = (await import("./modules/pc.js")).default;
+  } else {
+    routes = (await import("./modules/mobile.js")).default;
   }
-  nProgress.start();
 
-  return true;
-});
+  const router = createRouter({
+    history: createWebHashHistory(),
+    routes,
+  });
 
-router.afterEach(() => {
-  nProgress.done();
-});
+  const message = messageAdapter();
+  router.beforeEach((to, from) => {
+    if (to.meta.needAuth) {
+      const loginStore = useLoginStore();
+      if (!loginStore.isLogin && to.name !== "mLogin") {
+        message.showMessage();
+        return _isMobile() ? { name: "mLogin" } : { name: "article" };
+      }
+    }
+    nProgress.start();
+
+    return true;
+  });
+
+  router.afterEach(() => {
+    nProgress.done();
+  });
+
+  return {router, messageAdapter: message };
+};
+

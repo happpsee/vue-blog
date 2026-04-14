@@ -16,7 +16,6 @@
 
 <script setup>
 import { inject, ref } from "vue";
-import { ElNotification } from "element-plus";
 
 const { useApi } = inject("api");
 const showAddDialog = ref(false);

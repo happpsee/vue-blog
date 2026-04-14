@@ -12,17 +12,51 @@ import path from 'node:path'
 import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-
+import visualizer from 'rollup-plugin-visualizer'
+import AutoImport from "unplugin-auto-import/vite"
+import Components from "unplugin-vue-components/vite"
+import {ElementPlusResolver} from "unplugin-vue-components/resolvers"
+import compression from 'vite-plugin-compression'
 
 const dirname = path.resolve(fileURLToPath(import.meta.url), '../');
 
 
 export default defineConfig({
+  base: './',
   root: dirname,
   resolve: {
     alias: {
       '@': path.resolve(dirname, './src'),
     } 
+  },
+  build: {
+        modulePreload: false,  
+    rollupOptions: {
+      output: {
+
+        manualChunks(id) {
+          // console.log(id.includes("views"), id.includes("mviews"), id.includes("element-plus"), id.includes("vant"), "mview");
+          if (id.includes("views")) {
+            return "pc";
+          }
+          if (id.includes("mviews")) {
+            console.log(id, "mview");
+            return "mobile"
+          }
+          if (id.includes("element-plus")) {
+            return "element-plus";
+          }
+          if (id.includes("vant")) {
+            return "vant"
+          }
+        },
+        paths: {
+          "@wangeditor/editor-for-vue": "https://esm.sh/@wangeditor/editor-for-vue@5.1.12?external=vue",
+          'node-forge': 'https://esm.sh/node-forge@1.3.3',
+        }
+      },
+      external: ["node-forge", "@wangeditor/editor-for-vue", "vue"],
+    }
   },
   server: {
     host: "0.0.0.0",
@@ -38,8 +72,17 @@ export default defineConfig({
     }
   },
   plugins: [
+    AutoImport({resolvers: [ElementPlusResolver()]}),
+    Components({resolvers: [ElementPlusResolver()]}),
     vue(),
     vueJsx(),
     tailwindcss(),
+    compression({
+      algorithm: "brotliCompress"
+    }),
+    visualizer({      open: true,
+      filename: 'dist/stats.html',
+      gzipSize: true,
+      brotliSize: true,}),
   ],
 })

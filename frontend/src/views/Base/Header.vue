@@ -17,7 +17,7 @@
 
         <el-col :span="24" :sm="20" :lg="14" :push="1">
           <el-row align="middle" justify="end" class="nav">
-            <router-link v-for="nav in navs" :key="nav.path" :to="nav.path" class="nav-link"><span>{{ nav.text
+            <router-link v-for="nav in navs" :key="nav.text" :to="nav.path" class="nav-link"><span>{{ nav.text
                 }}</span></router-link>
             <template v-if="!loginStore.isLogin">
               <span class="auth-link login-linky" @click="activateForm('login')">登录</span>
@@ -55,7 +55,6 @@
 <script setup>
 import { ref } from 'vue';
 import { useLoginStore } from '@/stores/modules/login.js';
-import { ElCol, ElRow } from 'element-plus';
 import { useArticleStore } from "@/stores/modules/article";
 import { ElNotification } from 'element-plus';
 import Login from "@/views/Login/index.vue";
@@ -71,13 +70,14 @@ const articleStore = useArticleStore();
 const loginType = ref(null);
 const show = ref(false);
 const navs = ref([
-  { text: '首页', path: '/' },
-  { text: '分类', path: '/classify' },
-  { text: '写文章', path: '/write' },
-  { text: "聊天室", path: "/chat" },
-  { text: '用户信息', path: '/userinfo' }
+  { text: '首页', path: {name: "home"} },
+  { text: '分类', path: {name: "classify"} },
+  { text: '写文章', path: {name: "editor"} },
+  { text: "聊天室", path: {name: "chat"}},
+  { text: '用户信息', path: {name:"userinfo"} }
 ]);
 const router = useRouter();
+
 
 
 let oldSearchContent = "";

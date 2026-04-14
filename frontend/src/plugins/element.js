@@ -1,91 +1,91 @@
-/*
- * @Author: '超绝大帅哥' '3425395584@qq.com'
- * @Date: 2026-03-06 20:28:30
- * @LastEditors: '超绝大帅哥' '3425395584@qq.com'
- * @LastEditTime: 2026-03-15 14:38:12
- * @FilePath: \徐晨冰_Vue_20260302\第二十一天\blog\frontend\src\plugins\element.js
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
-import {
-  ElDialog,
-  ElForm,
-  ElFormItem,
-  ElContainer,
-  ElInput,
-  ElButton,
-  ElAvatar,
-  ElCard,
-  ElText,
-  ElScrollbar,
-  ElRow,
-  ElCol,
-  ElSkeleton,
-  ElSkeletonItem,
-  ElEmpty,
-  ElButtonGroup,
-  ElSelect,
-  ElOption,
-  ElUpload,
-  ElImage,
-  ElLoading,
-  ElPopconfirm
-} from 'element-plus'
+// /*
+//  * @Author: '超绝大帅哥' '3425395584@qq.com'
+//  * @Date: 2026-03-06 20:28:30
+//  * @LastEditors: '超绝大帅哥' '3425395584@qq.com'
+//  * @LastEditTime: 2026-03-15 14:38:12
+//  * @FilePath: \徐晨冰_Vue_20260302\第二十一天\blog\frontend\src\plugins\element.js
+//  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+//  */
+// import {
+//   ElDialog,
+//   ElForm,
+//   ElFormItem,
+//   ElContainer,
+//   ElInput,
+//   ElButton,
+//   ElAvatar,
+//   ElCard,
+//   ElText,
+//   ElScrollbar,
+//   ElRow,
+//   ElCol,
+//   ElSkeleton,
+//   ElSkeletonItem,
+//   ElEmpty,
+//   ElButtonGroup,
+//   ElSelect,
+//   ElOption,
+//   ElUpload,
+//   ElImage,
+//   ElLoading,
+//   ElPopconfirm
+// } from 'element-plus'
 
 
-import ElIcon from '@/components/ICon/ElIcon';
+// import ElIcon from '@/components/ICon/ElIcon';
 
-// main.ts
-
-
+// // main.ts
 
 
-const components = [
-  ElDialog,
-  ElForm,
-  ElFormItem,
-  ElContainer,
-  ElInput,
-  ElButton,
-  ElAvatar,
-  ElCard,
-  ElText,
-  ElScrollbar,
-  ElRow,
-  ElCol,
-  ElSkeleton,
-  ElSkeletonItem,
-  ElEmpty,
-  ElButtonGroup,
-  ElSelect,
-  ElOption,
-  ElUpload,
-  ElImage,
-  ElPopconfirm
-];
 
-const customElComponents = [
-  ElIcon
-];
 
-export const setupElement = (app) => {
+// const components = [
+//   ElDialog,
+//   ElForm,
+//   ElFormItem,
+//   ElContainer,
+//   ElInput,
+//   ElButton,
+//   ElAvatar,
+//   ElCard,
+//   ElText,
+//   ElScrollbar,
+//   ElRow,
+//   ElCol,
+//   ElSkeleton,
+//   ElSkeletonItem,
+//   ElEmpty,
+//   ElButtonGroup,
+//   ElSelect,
+//   ElOption,
+//   ElUpload,
+//   ElImage,
+//   ElPopconfirm
+// ];
 
-  const comps = components;
-  const cusComps = customElComponents;
+// const customElComponents = [
+//   ElIcon
+// ];
 
-  let i = components.length;
+// export const setupElement = (app) => {
 
-  while (i) {
-    --i;
-    app.component(comps[i].name, comps[i]);
-  }
+//   const comps = components;
+//   const cusComps = customElComponents;
 
-  i = customElComponents.length;
+//   let i = components.length;
 
-  while (i) {
-    --i;
-    app.component(cusComps[i].name, cusComps[i]);
-  }
+//   while (i) {
+//     --i;
+//     app.component(comps[i].name, comps[i]);
+//   }
 
-  app.use(ElLoading);
+//   i = customElComponents.length;
 
-};
+//   while (i) {
+//     --i;
+//     app.component(cusComps[i].name, cusComps[i]);
+//   }
+
+//   app.use(ElLoading);
+
+// };

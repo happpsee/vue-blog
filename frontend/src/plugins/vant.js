@@ -43,7 +43,6 @@ const components = [
 ];
 
 export const setupVant = (app) => {
-
   for (let i = 0, item; item = components[i]; i++) {
     app.component(item.name, item);
   }

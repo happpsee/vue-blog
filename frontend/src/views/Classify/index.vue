@@ -67,6 +67,7 @@ onBeforeMount(async () => {
 <style scoped  lang="stylus">
 
 .classify
+  position relative
   width 100%
   height 100%
 
@@ -75,6 +76,9 @@ onBeforeMount(async () => {
   height 100%
   
 .tool-item
+  position absolute
+  top 2
+  right -10
   margin-left 0 !important
   &:hover
     border 1px solid #ececec

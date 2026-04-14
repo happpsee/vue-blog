@@ -20,12 +20,14 @@ export default {
         query: "signature",
         type: "text",
         placeholder: "请输入签名",
+        textComp: "textarea"
       },
       {
         label: "描述",
         query: "description",
         type: "text",
         placeholder: "请输入描述",
+        textComp: "textarea"
       },
       {
         label: "邮箱",

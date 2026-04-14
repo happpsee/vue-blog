@@ -19,10 +19,10 @@ const tabbarItems = [
   },
   {
     id: 3,
-    name: "mime",
+    name: "userInfo",
     title: "我的",
     icon: "friends-o",
-    to: {name: "mMime"}
+    to: {name: "mUserInfo"}
   },
 ];
 
@@ -79,7 +79,7 @@ export default defineComponent(() => {
   });
 
   return () => {
-    const Comp = getFooterComp(type.value) ?? null;
+    const Comp = getFooterComp(type.value) ?? <p></p>;
     return (<Comp/>);
   }
 })
