@@ -19,20 +19,20 @@ jobs:
     steps:
       # 拉取代码
       - name: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       # 安装Node.js环境
       - name: install node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 24.x
       # 安装pnpm
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v6
         with: 
           version: 10.33.2
           run_install: false
 
       - name: install dependencies
-        run: pnpm ci
+        run: pnpm install
       - name: Build
         run: pnpm run build
       - name: Setup Pages
