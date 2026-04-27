@@ -2,7 +2,7 @@
  * @Author: '超绝大帅哥' '3425395584@qq.com'
  * @Date: 2026-03-02 18:21:31
  * @LastEditors: userName userEmail
- * @LastEditTime: 2026-04-27 13:39:10
+ * @LastEditTime: 2026-04-27 17:01:06
  * @FilePath: \徐晨冰_Vue_20260302\第二十一天\blog\vite.config.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -16,7 +16,7 @@ import visualizer from 'rollup-plugin-visualizer'
 import AutoImport from "unplugin-auto-import/vite"
 import Components from "unplugin-vue-components/vite"
 import {ElementPlusResolver} from "unplugin-vue-components/resolvers"
-// import compression from 'vite-plugin-compression'
+
 
 const dirname = path.resolve(fileURLToPath(import.meta.url), '../');
 
