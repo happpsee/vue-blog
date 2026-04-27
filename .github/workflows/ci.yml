@@ -10,7 +10,7 @@ on:
     branches: ["main"]
 
 permissions:
-  contents: read
+  contents: write
   pages: write
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
           run_install: false
 
       - name: install dependencies
-        run: pnpm ci
+        run: pnpm install
       - name: Build
         run: pnpm run build
       - name: Setup Pages
